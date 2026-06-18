@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="免费在线抖音视频下载工具，粘贴链接即可下载无水印高清视频">
+    <title>抖音视频下载器 - 在线免费工具</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">🎵 抖音视频下载器</a>
+            <ul class="nav-links">
+                <li><a href="/">首页</a></li>
+                <li><a href="/about">关于我们</a></li>
+                <li><a href="/contact">联系我们</a></li>
+                <li><a href="/privacy">隐私政策</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+<!-- Hero 区域 -->
+<section class="hero">
+    <h1>抖音视频在线下载</h1>
+    <p class="hero-subtitle">粘贴抖音分享链接，免费下载无水印高清视频</p>
+</section>
+
+<!-- 下载输入区 -->
+<section class="download-section">
+    <div class="download-box">
+        <div class="input-group">
+            <input type="text" id="video-url" placeholder="粘贴抖音分享链接或分享文本，自动识别" autocomplete="off">
+            <button id="download-btn" onclick="startDownload()">
+                <span class="btn-text">立即下载</span>
+                <span class="btn-loading" style="display:none;">下载中...</span>
+            </button>
+        </div>
+        <p class="input-tip">支持抖音分享链接（v.douyin.com）、视频页面链接、以及包含链接的分享文本，直接粘贴即可</p>
+        <div id="error-msg" class="error-msg" style="display:none;"></div>
+    </div>
+</section>
+
+<!-- 广告位（页面中央） -->
+<section class="ad-section">
+    <div class="ad-container">
+        <div class="ad-label">广告</div>
+        <!-- 广告占位符 - 配置 AdSense 后替换为实际广告代码 -->
+        <div class="ad-placeholder">
+            <p>📢 广告位 (Google AdSense)</p>
+            <p class="ad-placeholder-sub">配置 AdSense ID 后此处显示真实广告</p>
+        </div>
+    </div>
+</section>
+
+<!-- 下载结果区 -->
+<section class="result-section" id="result-section" style="display:none;">
+    <div class="result-card">
+        <h2>✅ 解析成功</h2>
+        <div class="result-info">
+            <div class="info-row">
+                <span class="info-label">视频标题：</span>
+                <span class="info-value" id="result-title"></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">文件大小：</span>
+                <span class="info-value" id="result-size"></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">视频时长：</span>
+                <span class="info-value" id="result-duration"></span>
+            </div>
+        </div>
+        <div class="result-actions">
+            <a id="download-link" href="#" class="download-link-btn" download>
+                ⬇ 保存到本地
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 功能介绍 -->
+<section class="features">
+    <h2>功能特点</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🎬</div>
+            <h3>高清下载</h3>
+            <p>支持下载原始清晰度视频，保留最佳画质</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🚫</div>
+            <h3>无水印</h3>
+            <p>自动获取无水印版本，干净纯粹</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>快速便捷</h3>
+            <p>粘贴链接一键下载，无需安装任何软件</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🆓</div>
+            <h3>完全免费</h3>
+            <p>所有功能免费使用，不限次数</p>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 抖音视频下载器 - 免费在线工具</p>
+            <div class="footer-links">
+                <a href="/about">关于我们</a>
+                <span>|</span>
+                <a href="/contact">联系我们</a>
+                <span>|</span>
+                <a href="/privacy">隐私政策</a>
+            </div>
+            <p class="footer-disclaimer">本工具仅供个人学习使用，请尊重原作者版权</p>
+        </div>
+    </footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

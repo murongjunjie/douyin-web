@@ -1,0 +1,473 @@
+/* ===== 全局重置 ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #fe2c55;
+    --primary-dark: #c11138;
+    --primary-light: #ff5c7a;
+    --bg: #f8f9fa;
+    --text: #1a1a2e;
+    --text-secondary: #6b7280;
+    --border: #e5e7eb;
+    --white: #ffffff;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --radius: 12px;
+    --max-width: 900px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* ===== 导航栏 ===== */
+.navbar {
+    background: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+.nav-logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+}
+.nav-logo:hover {
+    color: var(--primary);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+}
+.nav-links a {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* ===== 主内容区 ===== */
+.main-content {
+    flex: 1;
+    max-width: var(--max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* ===== Hero 区域 ===== */
+.hero {
+    text-align: center;
+    padding: 30px 0 20px;
+}
+.hero h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* ===== 下载输入区 ===== */
+.download-section {
+    margin: 30px 0;
+}
+
+.download-box {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+}
+
+.input-group {
+    display: flex;
+    gap: 12px;
+}
+
+#video-url {
+    flex: 1;
+    padding: 14px 18px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+#video-url:focus {
+    border-color: var(--primary);
+}
+
+#download-btn {
+    padding: 14px 32px;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+    min-width: 120px;
+}
+#download-btn:hover {
+    background: var(--primary-dark);
+}
+#download-btn:active {
+    transform: scale(0.97);
+}
+#download-btn:disabled {
+    background: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.input-tip {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.error-msg {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* ===== 广告区域（页面中央）===== */
+.ad-section {
+    margin: 36px 0;
+}
+
+.ad-container {
+    max-width: 728px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ad-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+/* 广告占位符样式 */
+.ad-placeholder {
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(
+        45deg,
+        #f0f0f0,
+        #f0f0f0 10px,
+        #e8e8e8 10px,
+        #e8e8e8 20px
+    );
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    color: var(--text-secondary);
+}
+.ad-placeholder p {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.ad-placeholder-sub {
+    font-size: 0.75rem !important;
+    font-weight: 400 !important;
+    margin-top: 4px;
+}
+
+/* AdSense 响应式广告 */
+.adsbygoogle {
+    margin: 0 auto;
+}
+
+/* ===== 下载结果区 ===== */
+.result-section {
+    margin: 30px 0;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid #22c55e;
+}
+
+.result-card h2 {
+    color: #22c55e;
+    margin-bottom: 20px;
+}
+
+.result-info {
+    margin-bottom: 24px;
+}
+
+.info-row {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    min-width: 100px;
+    color: var(--text-secondary);
+}
+
+.info-value {
+    flex: 1;
+    word-break: break-all;
+}
+
+.result-actions {
+    margin-top: 20px;
+}
+
+.download-link-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--primary);
+    color: var(--white);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+.download-link-btn:hover {
+    background: var(--primary-dark);
+    color: var(--white);
+}
+
+/* ===== 功能介绍 ===== */
+.features {
+    margin: 50px 0 30px;
+}
+.features h2 {
+    text-align: center;
+    margin-bottom: 28px;
+    font-size: 1.5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+}
+.feature-card:hover {
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ===== 法律/内容页面 ===== */
+.page-content {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 40px;
+    box-shadow: var(--shadow);
+}
+
+.page-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.update-date {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.legal-text h2 {
+    font-size: 1.2rem;
+    margin: 28px 0 12px;
+    color: var(--text);
+}
+
+.legal-text p {
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.legal-text ul {
+    margin: 8px 0 16px 24px;
+}
+.legal-text ul li {
+    margin-bottom: 6px;
+}
+
+/* FAQ */
+.faq-item {
+    margin: 20px 0;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: 8px;
+}
+.faq-item h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--primary);
+}
+
+/* 联系信息 */
+.contact-info {
+    margin: 20px 0;
+}
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+.contact-icon {
+    font-size: 1.8rem;
+}
+.contact-note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* ===== 页脚 ===== */
+.footer {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 30px 24px;
+    margin-top: auto;
+}
+
+.footer-content {
+    text-align: center;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.footer-content p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+.footer-links span {
+    color: var(--border);
+}
+
+.footer-disclaimer {
+    font-size: 0.8rem !important;
+    color: var(--text-secondary);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 640px) {
+    .hero h1 {
+        font-size: 1.6rem;
+    }
+    .input-group {
+        flex-direction: column;
+    }
+    #download-btn {
+        width: 100%;
+    }
+    .nav-links {
+        gap: 16px;
+    }
+    .nav-links a {
+        font-size: 0.85rem;
+    }
+    .main-content {
+        padding: 20px 16px;
+    }
+    .page-content {
+        padding: 24px 20px;
+    }
+}

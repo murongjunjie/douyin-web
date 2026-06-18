@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="免费在线抖音视频下载工具，粘贴链接即可下载无水印高清视频">
+    <meta name="keywords" content="抖音下载,视频下载,无水印,在线工具">
+    <title>{% block title %}抖音视频下载器{% endblock %} - 在线免费工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Google AdSense 脚本 - 替换 ca-pub-XXXXXXXXXXXXXXXX 为你的发布商ID -->
+    {% if ad_enabled %}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense_client }}"
+            crossorigin="anonymous"></script>
+    {% endif %}
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">🎵 抖音视频下载器</a>
+            <ul class="nav-links">
+                <li><a href="/">首页</a></li>
+                <li><a href="/about">关于我们</a></li>
+                <li><a href="/contact">联系我们</a></li>
+                <li><a href="/privacy">隐私政策</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 抖音视频下载器 - 免费在线工具</p>
+            <div class="footer-links">
+                <a href="/about">关于我们</a>
+                <span>|</span>
+                <a href="/contact">联系我们</a>
+                <span>|</span>
+                <a href="/privacy">隐私政策</a>
+            </div>
+            <p class="footer-disclaimer">本工具仅供个人学习使用，请尊重原作者版权</p>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
