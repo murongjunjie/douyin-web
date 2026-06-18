@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}联系我们{% endblock %}
+
+{% block content %}
+<section class="page-content">
+    <h1>联系我们</h1>
+
+    <div class="legal-text">
+        <h2>联系方式</h2>
+        <p>我们重视每一位用户的反馈和建议。您可以通过以下方式与我们取得联系：</p>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <div>
+                    <strong>电子邮箱</strong>
+                    <p>support@example.com</p>
+                    <p class="contact-note">（请替换为您的实际联系邮箱）</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">⏰</span>
+                <div>
+                    <strong>响应时间</strong>
+                    <p>通常在24-48小时内回复</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>常见问题</h2>
+
+        <div class="faq-item">
+            <h3>Q: 下载的视频有水印吗？</h3>
+            <p>A: 本工具自动获取无水印版本视频，但部分视频可能因平台限制仅能获取带水印版本。</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: 为什么下载失败？</h3>
+            <p>A: 常见原因包括：链接已失效、视频已被删除、链接格式不正确、或抖音平台临时限制。请检查链接后重试。</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: 下载的文件会保存多久？</h3>
+            <p>A: 出于隐私保护，下载的文件在服务器上保存1小时后自动删除。请及时保存到您的设备。</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: 支持哪些链接格式？</h3>
+            <p>A: 支持抖音短视频分享链接，包括短链接（如 v.douyin.com/xxx）和完整链接（如 www.douyin.com/video/xxx）。</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: 可以批量下载吗？</h3>
+            <p>A: 目前仅支持单个视频下载，批量功能正在开发中。</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q: 如何举报版权问题？</h3>
+            <p>A: 如果您是视频原作者并认为下载行为侵犯了您的权益，请发送邮件至上述邮箱，附带视频链接和您的身份证明，我们将在收到后尽快处理。</p>
+        </div>
+
+        <h2>意见反馈</h2>
+        <p>如果您有任何功能建议、Bug反馈或合作意向，欢迎通过邮件联系我们。您的每一条建议都是我们改进的动力。</p>
+    </div>
+</section>
+{% endblock %}
