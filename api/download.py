@@ -5,118 +5,86 @@ Vercel Serverless Function - 抖音视频解析API
 
 import json
 import re
-import yt_dlp
+from http.server import BaseHTTPRequestHandler
 
 
-def handler(request):
-    """Vercel Serverless 入口函数"""
+class handler(BaseHTTPRequestHandler):
+    """Vercel Python Serverless 入口"""
 
-    # 只接受 POST 请求
-    if request.method != "POST":
-        return {
-            "statusCode": 405,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"success": False, "error": "请使用 POST 请求"})
-        }
+    def do_POST(self):
+        """处理 POST 请求"""
+        # 读取请求体
+        content_length = int(self.headers.get('Content-Length', 0))
+        body = self.rfile.read(content_length) if content_length > 0 else b'{}'
 
-    try:
-        # 解析请求体
-        body = request.body.decode("utf-8") if request.body else "{}"
-        data = json.loads(body) if body else {}
-        url = (data.get("url") or "").strip()
+        try:
+            data = json.loads(body) if body else {}
+            url = (data.get('url') or '').strip()
 
-        if not url:
-            return {
-                "statusCode": 400,
-                "headers": {"Content-Type": "application/json"},
-                "body": json.dumps({"success": False, "error": "请输入抖音视频链接"})
+            if not url:
+                return self._json_response(400, {'success': False, 'error': '请输入抖音视频链接'})
+
+            # 从粘贴文本中提取链接
+            url_match = re.search(r'https?://[^\s<>"]+', url)
+            if url_match:
+                url = url_match.group(0)
+            elif re.match(r'^[\d.]+\s+\d+/\d+', url) or ' #' in url:
+                return self._json_response(400, {'success': False, 'error': '检测到抖音分享文本，但未找到有效链接。请使用「复制链接」功能获取完整链接'})
+            else:
+                return self._json_response(400, {'success': False, 'error': '未识别到有效链接，请粘贴完整的抖音分享链接'})
+
+            # yt-dlp 解析视频信息
+            ydl_opts = {
+                'format': 'best',
+                'no_playlist': True,
+                'quiet': True,
+                'no_warnings': True,
+                'skip_download': True,
             }
 
-        # 从粘贴文本中提取链接
-        url_match = re.search(r'https?://[^\s<>"]+', url)
-        if url_match:
-            url = url_match.group(0)
-        elif re.match(r'^[\d.]+\s+\d+/\d+', url) or ' #' in url:
-            return {
-                "statusCode": 400,
-                "headers": {"Content-Type": "application/json"},
-                "body": json.dumps({"success": False, "error": "检测到抖音分享文本，但未找到有效链接。请使用「复制链接」功能获取完整链接（格式如 https://v.douyin.com/xxx/）"})
-            }
-        else:
-            return {
-                "statusCode": 400,
-                "headers": {"Content-Type": "application/json"},
-                "body": json.dumps({"success": False, "error": "未识别到有效链接，请粘贴完整的抖音分享链接"})
-            }
+            import yt_dlp
 
-        # yt-dlp 解析视频信息
-        ydl_opts = {
-            "format": "best",
-            "no_playlist": True,
-            "quiet": True,
-            "no_warnings": True,
-            "skip_download": True,
-        }
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                title = info.get('title', '未命名')
+                duration = info.get('duration', 0)
 
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(url, download=False)
-            title = info.get("title", "未命名")
-            duration = info.get("duration", 0)
+                # 获取视频直链
+                video_url = info.get('url') or ''
+                if not video_url and 'formats' in info:
+                    formats = info['formats']
+                    best = next((f for f in formats if f.get('ext') == 'mp4'), formats[-1])
+                    video_url = best.get('url', '')
 
-            # 获取视频直链
-            video_url = info.get("url") or ""
-            if not video_url and "formats" in info:
-                formats = info["formats"]
-                best = next((f for f in formats if f.get("ext") == "mp4"), formats[-1])
-                video_url = best.get("url", "")
+                if not video_url:
+                    return self._json_response(400, {'success': False, 'error': '无法获取视频直链，可能视频需要登录或已删除'})
 
-            if not video_url:
-                return {
-                    "statusCode": 400,
-                    "headers": {"Content-Type": "application/json"},
-                    "body": json.dumps({"success": False, "error": "无法获取视频直链，可能视频需要登录或已删除"})
-                }
-
-            return {
-                "statusCode": 200,
-                "headers": {"Content-Type": "application/json"},
-                "body": json.dumps({
-                    "success": True,
-                    "title": title,
-                    "duration": duration,
-                    "video_url": video_url,
-                    "mode": "direct"
+                return self._json_response(200, {
+                    'success': True,
+                    'title': title,
+                    'duration': duration,
+                    'video_url': video_url,
+                    'mode': 'direct'
                 })
-            }
 
-    except Exception as e:
-        err_msg = str(e)
-        if "Unsupported URL" in err_msg or "generic" in err_msg.lower():
-            error_text = "该链接无法解析，可能原因：\n1. 分享链接已过期\n2. 视频已被删除或设为私密\n3. 链接格式不正确"
-        elif "HTTP Error" in err_msg or "403" in err_msg or "404" in err_msg:
-            error_text = f"视频无法访问：{err_msg[:150]}"
-        else:
-            error_text = f"解析失败：{err_msg[:200]}"
+        except Exception as e:
+            err_msg = str(e)
+            if 'Unsupported URL' in err_msg or 'generic' in err_msg.lower():
+                error_text = '该链接无法解析，可能原因：\n1. 分享链接已过期\n2. 视频已被删除或设为私密\n3. 链接格式不正确'
+            elif 'HTTP Error' in err_msg or '403' in err_msg or '404' in err_msg:
+                error_text = f'视频无法访问：{err_msg[:150]}'
+            else:
+                error_text = f'解析失败：{err_msg[:200]}'
 
-        return {
-            "statusCode": 500,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"success": False, "error": error_text})
-        }
+            return self._json_response(500, {'success': False, 'error': error_text})
 
+    def do_GET(self):
+        """GET 请求返回方法不允许"""
+        self._json_response(405, {'success': False, 'error': '请使用 POST 请求'})
 
-# Vercel 兼容：同时支持 ASGI 和 WSGI 调用方式
-class Request:
-    """模拟 Vercel 的 request 对象"""
-    def __init__(self, method="GET", body=None):
-        self.method = method
-        self.body = body
-
-
-# 如果直接运行此文件用于测试
-if __name__ == "__main__":
-    import sys
-
-    test_request = Request(method="POST", body=json.dumps({"url": sys.argv[1] if len(sys.argv) > 1 else ""}).encode())
-    result = handler(test_request)
-    print(result["body"])
+    def _json_response(self, status_code, data):
+        """发送 JSON 响应"""
+        self.send_response(status_code)
+        self.send_header('Content-Type', 'application/json')
+        self.end_headers()
+        self.wfile.write(json.dumps(data, ensure_ascii=False).encode('utf-8'))
